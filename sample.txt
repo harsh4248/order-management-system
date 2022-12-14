@@ -1,0 +1,4 @@
+pencil stationary 0.99 50
+pen stationary 1.99 50
+bag lifestyle 10.99 12
+shoes lifestyle 11.99 10

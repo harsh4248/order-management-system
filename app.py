@@ -2,6 +2,7 @@ from flask import Flask, request, redirect
 from flask.templating import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, migrate
+import os
 app = Flask(__name__)
 app.debug = True
 
@@ -85,6 +86,28 @@ def updateData():
     db.session.commit()
     print('done')
     return redirect('admin')
+
+@app.route('/uploadFile', methods=['POST'])
+def uploadFile():
+    fileitem = request.form.get('filename')
+
+    if(fileitem):
+        fn = os.path.basename(fileitem)
+        f = open(fn,'r')
+        for x in f:
+            row = x.split()
+            product_name = row[0]
+            product_category = row[1]
+            product_price = row[2]
+            product_quantity = row[3]
+            new_product = Inventory(product_name=product_name,product_category=product_category,product_price=product_price,quantity=int(product_quantity))
+            db.session.add(new_product)
+            db.session.commit()
+            print('done')
+        return redirect('admin')
+            # print(x)
+    
+    return redirect('/admin')
     
 
 @app.route('/add', methods=['POST'])
