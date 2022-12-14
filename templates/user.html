@@ -13,6 +13,7 @@
             <th>Product Name</th>
             <th>Product Catogory</th>
             <th>Quantity</th>
+            <th>price per unit</th>
             <th>#</th>
          </thead>
          {% for data in inventory %}
@@ -20,6 +21,7 @@
             <td>{{data.id}}</td>
             <td>{{data.product_name}}</td>
             <td>{{data.product_category}}</td>
+            <td>{{data.product_price}}</td>
             <td>{{data.quantity}}</td>
             <td><a href="/sell/{{data.id}}" type="button">Sell</a></td>
          </tbody>

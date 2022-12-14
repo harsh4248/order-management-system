@@ -16,11 +16,13 @@ class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(20), unique = False, nullable = False)
     product_category = db.Column(db.String(20), unique = False, nullable = False)
+    product_price = db.Column(db.Float, unique = False, nullable = False)
     quantity = db.Column(db.Integer, nullable = False)
 
-    def __init__(self, product_name, product_category, quantity):
+    def __init__(self, product_name, product_category, product_price, quantity):
         self.product_name = product_name
         self.product_category = product_category
+        self.product_price = product_price
         self.quantity = quantity
 
 
@@ -72,10 +74,14 @@ def updateData():
     product_name = request.form.get("productName")
     product_category = request.form.get("productCategory")
     product_quantity = request.form.get("quantity")
+    product_price = request.form.get("productPrice")
+
     data = Inventory.query.get(product_id)
     data.product_name = product_name
     data.product_category = product_category
+    data.product_price = product_price
     data.quantity = product_quantity
+
     db.session.commit()
     print('done')
     return redirect('admin')
@@ -87,11 +93,11 @@ def addProduct():
     product_name = request.form.get("productName")
     product_category = request.form.get("productCategory")
     product_quantity = request.form.get("quantity")
+    product_price = request.form.get("productPrice")
 
-    if product_name != '' and product_category != '' and product_quantity != None:
+    if product_name != '' and product_category != '' and product_quantity != None and product_price != None:
     
-
-        new_product = Inventory(product_name=product_name,product_category=product_category,quantity=int(product_quantity))
+        new_product = Inventory(product_name=product_name,product_category=product_category,product_price=product_price,quantity=int(product_quantity))
         db.session.add(new_product)
         db.session.commit()
         print('done')
