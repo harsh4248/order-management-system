@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Index Page</title>
+    </head>
+    <body>
+       <form action="/update" method="post">
+        <label>ID</label>
+        <input type="text" name="productID" placeholder="id" value="{{inventory.id}}">
+        <label>Product Name</label>
+        <input type="text" name="productName" placeholder="Product Name" value='{{inventory.product_name}}'>
+        <label>Product Category</label>
+        <input type="text" name="productCategory" placeholder="Product category" value="{{inventory.product_category}}">
+        <label>Quantity</label>
+        <input type="number" name="quantity" placeholder="Quantity" value="{{inventory.quantity}}">
+        <button type="submit">Update</button>
+       </form>       
+    </body>
+ </html>

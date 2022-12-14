@@ -31,15 +31,55 @@ def check():
 
 @app.route('/user')
 def user():
-    return render_template('user.html')
+    inventory = Inventory.query.all()
+    return render_template('user.html', inventory = inventory)
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html')
+    inventory = Inventory.query.all()
+    return render_template('admin.html',inventory = inventory)
 
 @app.route('/admin/addnew')
 def addnew():
     return render_template('addnew.html')
+
+@app.route('/delete/<int:id>')
+def erase(id):
+    # Deletes the data on the basis of unique id and
+    # redirects to home page
+    data = Inventory.query.get(id)
+    db.session.delete(data)
+    db.session.commit()
+    return redirect('/admin')
+
+@app.route('/sell/<int:id>')
+def sell(id):
+    data = Inventory.query.get(id)
+    if(data.quantity > 0):
+        data.quantity = data.quantity - 1
+    db.session.commit()
+    return redirect('/user')
+
+@app.route('/update/<int:id>')
+def update(id):
+    data = Inventory.query.get(id)
+    return render_template('/update.html', inventory = data)
+
+@app.route('/update',methods=['POST'])
+def updateData():
+    product_id = request.form.get('productID')
+    print(product_id)
+    product_name = request.form.get("productName")
+    product_category = request.form.get("productCategory")
+    product_quantity = request.form.get("quantity")
+    data = Inventory.query.get(product_id)
+    data.product_name = product_name
+    data.product_category = product_category
+    data.quantity = product_quantity
+    db.session.commit()
+    print('done')
+    return redirect('admin')
+    
 
 @app.route('/add', methods=['POST'])
 def addProduct():
@@ -49,13 +89,15 @@ def addProduct():
     product_quantity = request.form.get("quantity")
 
     if product_name != '' and product_category != '' and product_quantity != None:
+    
 
-        new_product = Inventory(product_name=product_name,product_category=product_category,product_quantity=product_quantity)
+        new_product = Inventory(product_name=product_name,product_category=product_category,quantity=int(product_quantity))
         db.session.add(new_product)
         db.session.commit()
-        return redirect('/addnew')
+        print('done')
+        return redirect('admin')
     else:
-        return redirect('/addnew')
+        return redirect('admin/addnew')
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@
    </head>
    <body>
       <h3>Products</h3>
-      <a href="/add_data">ADD</a>
+      <!-- <a href="/add_data">ADD</a> -->
       <br>
       <table>
          <thead>
@@ -15,15 +15,15 @@
             <th>Quantity</th>
             <th>#</th>
          </thead>
-         {% for data in profiles %}
+         {% for data in inventory %}
          <tbody>
             <td>{{data.id}}</td>
             <td>{{data.product_name}}</td>
             <td>{{data.product_category}}</td>
             <td>{{data.quantity}}</td>
-            <td><a href="/delete/{{data.id}}" type="button">Delete</a></td>
+            <td><a href="/sell/{{data.id}}" type="button">Sell</a></td>
          </tbody>
-         {% endfor%}
+         {% endfor %}
       </table>
    </body>
 </html>

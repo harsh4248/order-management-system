@@ -5,6 +5,27 @@
     </head>
     <body>
        <a href="/admin/addnew"><h3>add new</h3></a>
-       <a href="/admin/update"><h3>update</h3></a>
+       <!-- <a href="/admin/update"><h3>update</h3></a> -->
+       <table>
+         <thead>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th>Quantity</th>
+            <th>#</th>
+            <th>#</th>
+         </thead>
+         {% for data in inventory %}
+         <tbody>
+            <td>{{data.id}}</td>
+            <td>{{data.product_name}}</td>
+            <td>{{data.product_category}}</td>
+            <td>{{data.quantity}}</td>
+            <td><a href="/delete/{{data.id}}" type="button">Delete</a></td>
+            <td><a href="/update/{{data.id}}" type="button">Update</a></td>
+         </tbody>
+         {% endfor%}
+      </table>
+
     </body>
  </html>
